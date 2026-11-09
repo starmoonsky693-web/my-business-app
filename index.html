@@ -1,0 +1,96 @@
+<!doctype html>
+<html lang="my">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1">
+<meta name="theme-color" content="#123b32">
+<title>My Business App</title>
+<style>
+:root{--green:#123b32;--mint:#e7f2ed;--gold:#d9ad58;--ink:#17251f;--muted:#718078;--bg:#f4f7f5;--white:#fff;--red:#bd5149}
+*{box-sizing:border-box}body{margin:0;background:var(--bg);color:var(--ink);font:15px system-ui,-apple-system,"Noto Sans Myanmar",sans-serif}
+header{background:var(--green);color:white;padding:20px 16px 24px;border-radius:0 0 22px 22px}
+.top{display:flex;justify-content:space-between;align-items:center;gap:10px}.brand{font-size:20px;font-weight:800}.sub{opacity:.75;font-size:12px;margin-top:4px}
+button,select,input{font:inherit}button{border:0;border-radius:11px;padding:11px 14px;background:var(--green);color:white;font-weight:650;cursor:pointer}
+.lang{background:#ffffff20;border:1px solid #ffffff55}
+main{max-width:900px;margin:auto;padding:16px}.cards{display:grid;grid-template-columns:repeat(2,1fr);gap:10px;margin-top:-4px}
+.card{background:white;border-radius:16px;padding:15px;box-shadow:0 3px 14px #173b3010}.card small{color:var(--muted)}.amount{font-size:20px;font-weight:800;margin-top:7px;overflow-wrap:anywhere}.income{color:#18845c}.expense{color:var(--red)}
+nav{display:flex;gap:7px;overflow:auto;padding:15px 0}nav button{white-space:nowrap;background:white;color:var(--green);border:1px solid #dce6e0}nav button.active{background:var(--green);color:white}
+.panel{background:white;border-radius:16px;padding:16px;margin:12px 0;box-shadow:0 3px 14px #173b3008}.panel h2{font-size:17px;margin:0 0 14px}
+.grid{display:grid;grid-template-columns:repeat(2,1fr);gap:10px}.field{display:flex;flex-direction:column;gap:5px}.field.full{grid-column:1/-1}label{font-size:13px;color:var(--muted)}input,select{width:100%;padding:11px;border:1px solid #dce5df;border-radius:10px;background:#fff;color:var(--ink)}
+.actions{display:flex;gap:8px;flex-wrap:wrap;margin-top:12px}.secondary{background:var(--mint);color:var(--green)}.danger{background:#fbeceb;color:#9d302a}
+table{width:100%;border-collapse:collapse;font-size:13px}th,td{text-align:left;padding:10px 7px;border-bottom:1px solid #edf1ee}th{color:var(--muted);font-weight:600}.tablewrap{overflow:auto}
+.rowtitle{display:flex;justify-content:space-between;align-items:center;gap:8px}.hidden{display:none}.muted{color:var(--muted);font-size:13px}.empty{text-align:center;color:var(--muted);padding:22px}
+footer{text-align:center;color:var(--muted);font-size:12px;padding:20px}
+@media(min-width:650px){.cards{grid-template-columns:repeat(4,1fr)}}
+</style>
+</head>
+<body>
+<header><div class="top"><div><div class="brand">MY BUSINESS APP</div><div class="sub" id="subtitle">နေ့စဉ် ငွေစာရင်းနှင့် လုပ်ငန်းစီမံခန့်ခွဲမှု</div></div><button class="lang" id="langBtn">English</button></div></header>
+<main>
+<section class="cards">
+ <div class="card"><small id="lblIncome">စုစုပေါင်း ဝင်ငွေ</small><div class="amount income" id="totalIncome">0 ကျပ်</div></div>
+ <div class="card"><small id="lblExpense">စုစုပေါင်း ထွက်ငွေ</small><div class="amount expense" id="totalExpense">0 ကျပ်</div></div>
+ <div class="card"><small id="lblProfit">အမြတ် / အရှုံး</small><div class="amount" id="totalProfit">0 ကျပ်</div></div>
+ <div class="card"><small id="lblCount">စာရင်းအရေအတွက်</small><div class="amount" id="totalCount">0</div></div>
+</section>
+<nav id="tabs">
+<button class="active" data-tab="entry" id="tabEntry">စာရင်းသွင်းရန်</button>
+<button data-tab="daily" id="tabDaily">နေ့စဉ်စာရင်း</button>
+<button data-tab="monthly" id="tabMonthly">လချုပ်</button>
+<button data-tab="yearly" id="tabYearly">နှစ်ချုပ်</button>
+<button data-tab="export" id="tabExport">ထုတ်ယူရန်</button>
+</nav>
+<section id="entry" class="panel">
+<h2 id="entryTitle">ငွေစာရင်းအသစ်သွင်းရန်</h2>
+<form id="entryForm" class="grid">
+ <div class="field"><label id="dateLabel">ရက်စွဲ</label><input type="date" id="date" required></div>
+ <div class="field"><label id="typeLabel">အမျိုးအစား</label><select id="type"><option value="income">ဝင်ငွေ / Income</option><option value="expense">ထွက်ငွေ / Expense</option></select></div>
+ <div class="field"><label id="categoryLabel">အမျိုးအစားခွဲ</label><input id="category" placeholder="ဥပမာ - အရောင်း၊ စားစရိတ်" required></div>
+ <div class="field"><label id="amountLabel">ငွေပမာဏ (ကျပ်)</label><input id="amount" type="number" min="1" step="1" placeholder="ဥပမာ - 50000" required></div>
+ <div class="field full"><label id="noteLabel">မှတ်ချက်</label><input id="note" placeholder="အသေးစိတ် မှတ်ချက် (မဖြစ်မနေမဟုတ်ပါ)"></div>
+ <div class="field full"><button type="submit" id="saveBtn">စာရင်းသိမ်းမည်</button></div>
+</form>
+</section>
+<section id="daily" class="panel hidden"><div class="rowtitle"><h2 id="dailyTitle">နေ့စဉ်စာရင်း</h2><input style="max-width:160px" type="date" id="dailyDate"></div><div id="dailySummary" class="muted"></div><div class="tablewrap" id="dailyTable"></div></section>
+<section id="monthly" class="panel hidden"><div class="rowtitle"><h2 id="monthlyTitle">လချုပ်စာရင်း</h2><input style="max-width:160px" type="month" id="monthPick"></div><div id="monthlySummary"></div></section>
+<section id="yearly" class="panel hidden"><div class="rowtitle"><h2 id="yearlyTitle">နှစ်ချုပ်စာရင်း</h2><input style="max-width:130px" type="number" min="2000" max="2100" id="yearPick"></div><div id="yearlySummary"></div></section>
+<section id="export" class="panel hidden"><h2 id="exportTitle">စာရင်းဖိုင်ထုတ်ယူရန်</h2><p class="muted" id="exportHelp">ရက်စွဲအပိုင်းအခြားရွေးပြီး Excel သို့မဟုတ် Word ဖိုင်ထုတ်နိုင်သည်။</p><div class="grid"><div class="field"><label id="fromLabel">မှ</label><input type="date" id="fromDate"></div><div class="field"><label id="toLabel">အထိ</label><input type="date" id="toDate"></div></div><div class="actions"><button id="excelBtn">Excel ထုတ်ယူရန်</button><button class="secondary" id="wordBtn">Word ထုတ်ယူရန်</button></div></section>
+<footer>My Business App • MMK • Data is stored in this browser on this device.</footer>
+</main>
+<script>
+const $=id=>document.getElementById(id), money=n=>new Intl.NumberFormat('en-US').format(n)+' ကျပ်';
+let records=JSON.parse(localStorage.getItem('mba_records')||'[]'), lang=localStorage.getItem('mba_lang')||'my';
+const today=new Date().toISOString().slice(0,10);
+$('date').value=today;$('dailyDate').value=today;$('monthPick').value=today.slice(0,7);$('yearPick').value=today.slice(0,4);$('fromDate').value=today.slice(0,4)+'-01-01';$('toDate').value=today;
+const words={
+my:{subtitle:'နေ့စဉ် ငွေစာရင်းနှင့် လုပ်ငန်းစီမံခန့်ခွဲမှု',income:'စုစုပေါင်း ဝင်ငွေ',expense:'စုစုပေါင်း ထွက်ငွေ',profit:'အမြတ် / အရှုံး',count:'စာရင်းအရေအတွက်',entry:'စာရင်းသွင်းရန်',daily:'နေ့စဉ်စာရင်း',monthly:'လချုပ်',yearly:'နှစ်ချုပ်',export:'ထုတ်ယူရန်',entryTitle:'ငွေစာရင်းအသစ်သွင်းရန်',date:'ရက်စွဲ',type:'အမျိုးအစား',category:'အမျိုးအစားခွဲ',amount:'ငွေပမာဏ (ကျပ်)',note:'မှတ်ချက်',save:'စာရင်းသိမ်းမည်',del:'ဖျက်ရန်',empty:'စာရင်းမရှိသေးပါ',exportTitle:'စာရင်းဖိုင်ထုတ်ယူရန်',exportHelp:'ရက်စွဲအပိုင်းအခြားရွေးပြီး Excel သို့မဟုတ် Word ဖိုင်ထုတ်နိုင်သည်။',from:'မှ',to:'အထိ',excel:'Excel ထုတ်ယူရန်',word:'Word ထုတ်ယူရန်',incomeType:'ဝင်ငွေ',expenseType:'ထွက်ငွေ',total:'စုစုပေါင်း',net:'အသားတင်'},
+en:{subtitle:'Daily cashbook and business management',income:'Total Income',expense:'Total Expenses',profit:'Profit / Loss',count:'Transactions',entry:'Add Entry',daily:'Daily',monthly:'Monthly',yearly:'Yearly',export:'Export',entryTitle:'Add a transaction',date:'Date',type:'Type',category:'Category',amount:'Amount (MMK)',note:'Note',save:'Save Entry',del:'Delete',empty:'No records yet',exportTitle:'Export Records',exportHelp:'Choose a date range, then export to Excel or Word.',from:'From',to:'To',excel:'Export Excel',word:'Export Word',incomeType:'Income',expenseType:'Expense',total:'Total',net:'Net'},
+};
+function t(k){return words[lang][k]||k}
+function save(){localStorage.setItem('mba_records',JSON.stringify(records));render()}
+function sum(arr,type){return arr.filter(x=>x.type===type).reduce((s,x)=>s+x.amount,0)}
+function filtered(from,to){return records.filter(x=>x.date>=from&&x.date<=to).sort((a,b)=>b.date.localeCompare(a.date))}
+function table(arr){if(!arr.length)return '<div class="empty">'+t('empty')+'</div>';return '<table><thead><tr><th>'+t('date')+'</th><th>'+t('type')+'</th><th>'+t('category')+'</th><th>'+t('amount')+'</th><th>'+t('note')+'</th><th></th></tr></thead><tbody>'+arr.map(x=>`<tr><td>${x.date}</td><td class="${x.type}">${x.type==='income'?t('incomeType'):t('expenseType')}</td><td>${esc(x.category)}</td><td>${money(x.amount)}</td><td>${esc(x.note)}</td><td><button class="danger" onclick="removeRecord('${x.id}')">×</button></td></tr>`).join('')+'</tbody></table>'}
+function esc(s){return String(s||'').replace(/[&<>"']/g,c=>({'&':'&amp;','<':'&lt;','>':'&gt;','"':'&quot;',"'":'&#39;'}[c]))}
+function summary(arr){let i=sum(arr,'income'),e=sum(arr,'expense');return `<div class="cards" style="margin:12px 0"><div class="card"><small>${t('income')}</small><div class="amount income">${money(i)}</div></div><div class="card"><small>${t('expense')}</small><div class="amount expense">${money(e)}</div></div><div class="card"><small>${t('net')}</small><div class="amount">${money(i-e)}</div></div></div>`}
+function render(){
+let i=sum(records,'income'),e=sum(records,'expense');$('totalIncome').textContent=money(i);$('totalExpense').textContent=money(e);$('totalProfit').textContent=money(i-e);$('totalProfit').className='amount '+(i-e<0?'expense':'income');$('totalCount').textContent=records.length;
+let d=filtered($('dailyDate').value,$('dailyDate').value);$('dailySummary').innerHTML=summary(d);$('dailyTable').innerHTML=table(d);
+let m=$('monthPick').value;let ma=filtered(m+'-01',m+'-31');$('monthlySummary').innerHTML=summary(ma)+table(ma);
+let y=$('yearPick').value;let ya=filtered(y+'-01-01',y+'-12-31');$('yearlySummary').innerHTML=summary(ya)+table(ya);
+}
+window.removeRecord=id=>{if(confirm(lang==='my'?'ဒီစာရင်းကို ဖျက်မှာ သေချာပါသလား။':'Delete this record?')){records=records.filter(x=>x.id!==id);save()}};
+$('entryForm').addEventListener('submit',e=>{e.preventDefault();let amount=Number($('amount').value);if(!Number.isFinite(amount)||amount<=0)return;records.push({id:crypto.randomUUID?crypto.randomUUID():String(Date.now()),date:$('date').value,type:$('type').value,category:$('category').value.trim(),amount,note:$('note').value.trim()});$('entryForm').reset();$('date').value=today;save();alert(lang==='my'?'စာရင်းသိမ်းပြီးပါပြီ။':'Entry saved.')});
+['dailyDate','monthPick','yearPick'].forEach(id=>$(id).addEventListener('change',render));
+$('tabs').addEventListener('click',e=>{let b=e.target.closest('button[data-tab]');if(!b)return;document.querySelectorAll('nav button').forEach(x=>x.classList.toggle('active',x===b));['entry','daily','monthly','yearly','export'].forEach(id=>$(id).classList.toggle('hidden',id!==b.dataset.tab));render()});
+function rangeRecords(){return filtered($('fromDate').value||'0000-01-01',$('toDate').value||'9999-12-31')}
+function exportCSV(){let arr=rangeRecords();let rows=[['Date','Type','Category','Amount MMK','Note'],...arr.map(x=>[x.date,x.type,x.category,x.amount,x.note])];let csv='\ufeff'+rows.map(r=>r.map(v=>'"'+String(v??'').replace(/"/g,'""')+'"').join(',')).join('\r\n');download(new Blob([csv],{type:'text/csv;charset=utf-8'}),'business-records.csv')}
+function exportWord(){let arr=rangeRecords();let html=`<html><head><meta charset="utf-8"></head><body><h1>My Business App - Financial Report</h1><p>${$('fromDate').value} to ${$('toDate').value}</p><p>Income: ${money(sum(arr,'income'))} | Expenses: ${money(sum(arr,'expense'))} | Profit/Loss: ${money(sum(arr,'income')-sum(arr,'expense'))}</p>${tableForWord(arr)}</body></html>`;download(new Blob(['\ufeff',html],{type:'application/msword'}),'business-report.doc')}
+function tableForWord(arr){return '<table border="1" cellspacing="0" cellpadding="6"><tr><th>Date</th><th>Type</th><th>Category</th><th>Amount MMK</th><th>Note</th></tr>'+arr.map(x=>`<tr><td>${x.date}</td><td>${x.type}</td><td>${esc(x.category)}</td><td>${x.amount}</td><td>${esc(x.note)}</td></tr>`).join('')+'</table>'}
+function download(blob,name){let a=document.createElement('a'),u=URL.createObjectURL(blob);a.href=u;a.download=name;a.click();setTimeout(()=>URL.revokeObjectURL(u),1500)}
+$('excelBtn').onclick=exportCSV;$('wordBtn').onclick=exportWord;
+$('langBtn').onclick=()=>{lang=lang==='my'?'en':'my';localStorage.setItem('mba_lang',lang);applyLang()};
+function applyLang(){let map={subtitle:'subtitle',lblIncome:'income',lblExpense:'expense',lblProfit:'profit',lblCount:'count',tabEntry:'entry',tabDaily:'daily',tabMonthly:'monthly',tabYearly:'yearly',tabExport:'export',entryTitle:'entryTitle',dateLabel:'date',typeLabel:'type',categoryLabel:'category',amountLabel:'amount',noteLabel:'note',saveBtn:'save',dailyTitle:'daily',monthlyTitle:'monthly',yearlyTitle:'yearly',exportTitle:'exportTitle',exportHelp:'exportHelp',fromLabel:'from',toLabel:'to',excelBtn:'excel',wordBtn:'word'};Object.entries(map).forEach(([id,k])=>$(id).textContent=t(k));$('langBtn').textContent=lang==='my'?'English':'မြန်မာ';$('category').placeholder=lang==='my'?'ဥပမာ - အရောင်း၊ စားစရိတ်':'e.g. Sales, Transport';$('note').placeholder=lang==='my'?'အသေးစိတ် မှတ်ချက် (မဖြစ်မနေမဟုတ်ပါ)':'Optional details';render()}
+applyLang();
+</script>
+</body></html>
